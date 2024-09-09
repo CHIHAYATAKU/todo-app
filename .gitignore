@@ -9,3 +9,5 @@ target
 /RUNNING_PID
 docker/db/data/
 .bsp/
+.vscode
+.bloop
