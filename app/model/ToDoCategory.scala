@@ -30,8 +30,8 @@ object ToDoCategory {
   sealed abstract class Color(val code: Short, val name: String) extends EnumStatus
 
   object Color extends EnumStatus.Of[Color] {
-    case object FRONT extends Color(code = 1, name = "#4CAF50")
-    case object BACK  extends Color(code = 2, name = "進行中")
-    case object INFRA extends Color(code = 3, name = "完了")
+    case object FRONT extends Color(code = 1, name = "#61DAFB")
+    case object BACK  extends Color(code = 2, name = "#4B8BBE")
+    case object INFRA extends Color(code = 3, name = "#E6522C")
   }
 }

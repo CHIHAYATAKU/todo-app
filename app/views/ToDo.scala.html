@@ -1,15 +1,42 @@
 @import model._
+@import java.time.format.DateTimeFormatter
+
 @(vv: model.ViewValueToDo, todos: Seq[(ToDo, Option[ToDoCategory])])
 @common.Default(vv){
-  <ul>
-    <li><a href="@routes.HomeController.index()">Home</a></li>
-    <li><a>カテゴリー一覧</a></li>
-  </ul>
-  <ul>
-    @for((todo, categoryOpt) <- todos) {
-      <li style="background-color: @categoryOpt.fold("#FFFFFF")(_.color.name)">
-        <strong>@todo.title</strong> - @todo.body
-      </li>
-    }
-  </ul>
+<ul>
+  <li><a href="@routes.HomeController.index()">Home</a></li>
+  <li><a>カテゴリー一覧</a></li>
+</ul>
+<div class="table-div">
+  <div class="legend">
+    <div><span style="background-color: #61DAFB;"></span> フロントエンド</div>
+    <div><span style="background-color: #4B8BBE;"></span> バックエンド</div>
+    <div><span style="background-color: #E6522C;"></span> インフラ</div>
+  </div>
+  <table border="1" cellspacing="0" cellpadding="5">
+    <thead>
+      <tr>
+        <th>タイトル</th>
+        <th>詳細</th>
+        <th>ステータス</th>
+        <th>カテゴリ</th>
+        <th>作成日時</th>
+        <th>更新日時</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for((todo, categoryOpt) <- todos) { <tr style="background-color: @categoryOpt.fold(" #FFFFFF")(_.color.name)">
+        <td>@todo.title</td>
+        <td>@todo.body</td>
+        <td>@todo.state.name</td>
+        <td>@categoryOpt.fold("未分類")(_.name)</td>
+        @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd")) { dateFormatter =>
+        <td>@todo.createdAt.format(dateFormatter)</td>
+        <td>@todo.updatedAt.format(dateFormatter)</td>
+        }
+        </tr>
+        }
+    </tbody>
+  </table>
+</div>
 }

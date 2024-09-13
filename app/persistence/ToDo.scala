@@ -18,7 +18,7 @@ import javax.inject._
 class ToDoRepository @Inject() (
   @Named("master") master: Database,
   @Named("slave") slave:   Database
-)(implicit val ec:                   ExecutionContext) extends SlickRepository[ToDo.Id, ToDo] {
+)(implicit val ec:         ExecutionContext) extends SlickRepository[ToDo.Id, ToDo] {
 
   val todoTable         = TableQuery[ToDoTable]
   val todoCategoryTable = TableQuery[ToDoCategoryTable]
@@ -30,9 +30,12 @@ class ToDoRepository @Inject() (
     slave.run(todoTable.filter(_.id === id).result.headOption)
   }
 
+  /**
+    * Get ToDo Data　With Category
+    */
   def getTodosWithCategories(): Future[Seq[(ToDo, Option[ToDoCategory])]] = {
     val queryWithLeftJoin = for {
-      (todo, categoryOpt) <- todoTable joinLeft todoCategoryTable on (_.category_id === _.id)
+      (todo, categoryOpt) <- todoTable joinLeft todoCategoryTable on (_.categoryId === _.id)
     } yield (todo, categoryOpt)
 
     slave.run(queryWithLeftJoin.result)
