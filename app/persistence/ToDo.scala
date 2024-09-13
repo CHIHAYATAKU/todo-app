@@ -32,7 +32,7 @@ class ToDoRepository @Inject() (
 
   def getTodosWithCategories(): Future[Seq[(ToDo, Option[ToDoCategory])]] = {
     val queryWithLeftJoin = for {
-      (todo, categoryOpt) <- todoTable joinLeft todoCategoryTable on (_.categoryId === _.id)
+      (todo, categoryOpt) <- todoTable joinLeft todoCategoryTable on (_.category_id === _.id)
     } yield (todo, categoryOpt)
 
     slave.run(queryWithLeftJoin.result)

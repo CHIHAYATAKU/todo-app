@@ -9,7 +9,7 @@ import java.time
 
 // UserTable: Userテーブルへのマッピングを行う
 //~~~~~~~~~~~~~~
-case class ToDoCategoryTable(tag: Tag) extends Table[ToDoCategory](tag, "todoCategory") {
+case class ToDoCategoryTable(tag: Tag) extends Table[ToDoCategory](tag, "to_do_category") {
   def id        = column[ToDoCategory.Id]("id", UInt64, O.PrimaryKey, O.AutoInc)
   def name      = column[String]("name", Utf8Char255)
   def slug      = column[String]("slug", AsciiChar64)

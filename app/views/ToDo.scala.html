@@ -1,11 +1,15 @@
 @import model._
 @(vv: model.ViewValueToDo, todos: Seq[(ToDo, Option[ToDoCategory])])
 @common.Default(vv){
-   <ul>
+  <ul>
+    <li><a href="@routes.HomeController.index()">Home</a></li>
+    <li><a>カテゴリー一覧</a></li>
+  </ul>
+  <ul>
     @for((todo, categoryOpt) <- todos) {
       <li style="background-color: @categoryOpt.fold("#FFFFFF")(_.color.name)">
         <strong>@todo.title</strong> - @todo.body
       </li>
     }
- </ul>
+  </ul>
 }

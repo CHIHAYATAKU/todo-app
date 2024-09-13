@@ -22,8 +22,8 @@ class ToDoController @Inject() (
       Ok(views.html.ToDo(
         ViewValueToDo(
           title  = "ToDo List",
-          cssSrc = Seq("styles.css"),
-          jsSrc  = Seq("scripts.js")
+          cssSrc = Seq("todo.css"),
+          jsSrc  = Seq("todo.js")
         ),
         todosWithCategories
       ))
