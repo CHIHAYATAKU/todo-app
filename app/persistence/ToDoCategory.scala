@@ -13,16 +13,15 @@ import model.ToDoCategory.Id
 import persistence.db.ToDoCategoryTable
 import slick.dbio.Effect
 import slick.sql.FixedSqlAction
+import javax.inject._
 
 // ToDoRepository: ToDoTableへのクエリ発行を行うRepository層の定義
 //~~~~~~~~~~~~~~~~~~~~~~
-class ToDoCategoryRepository()(implicit val ec: ExecutionContext) extends SlickRepository[ToDoCategory.Id, ToDoCategory] {
-  val master: Database = DatabaseBuilder.fromHikariDataSource(
-    new HikariDataSource(HikariConfigBuilder.default(DataSourceName("ixias.db.mysql://master/user")).build())
-  )
-  val slave:  Database = DatabaseBuilder.fromHikariDataSource(
-    new HikariDataSource(HikariConfigBuilder.default(DataSourceName("ixias.db.mysql://slave/user")).build())
-  )
+@Singleton
+class ToDoCategoryRepository @Inject() (
+  @Named("master") master: Database,
+  @Named("slave") slave:   Database
+)(implicit val ec:                   ExecutionContext) extends SlickRepository[ToDoCategory.Id, ToDoCategory] {
 
   val todoCategoryTable = TableQuery[ToDoCategoryTable]
 

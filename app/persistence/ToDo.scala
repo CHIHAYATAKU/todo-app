@@ -1,7 +1,5 @@
 package persistence
 
-import com.zaxxer.hikari.HikariDataSource
-
 import scala.concurrent.{ ExecutionContext, Future }
 import ixias.model._
 import ixias.slick.SlickRepository
@@ -13,19 +11,17 @@ import model.ToDo.Id
 import persistence.db.{ ToDoTable, ToDoCategoryTable }
 import slick.dbio.Effect
 import slick.sql.FixedSqlAction
-
+import javax.inject._
 // ToDoRepository: ToDoTableへのクエリ発行を行うRepository層の定義
 //~~~~~~~~~~~~~~~~~~~~~~
-class ToDoRepository()(implicit val ec: ExecutionContext) extends SlickRepository[ToDo.Id, ToDo] {
-  val master: Database = DatabaseBuilder.fromHikariDataSource(
-    new HikariDataSource(HikariConfigBuilder.default(DataSourceName("ixias.db.mysql://master/user")).build())
-  )
-  val slave:  Database = DatabaseBuilder.fromHikariDataSource(
-    new HikariDataSource(HikariConfigBuilder.default(DataSourceName("ixias.db.mysql://slave/user")).build())
-  )
+@Singleton
+class ToDoRepository @Inject() (
+  @Named("master") master: Database,
+  @Named("slave") slave:   Database
+)(implicit val ec:                   ExecutionContext) extends SlickRepository[ToDo.Id, ToDo] {
 
-  val todoTable     = TableQuery[ToDoTable]
-  val categoryTable = TableQuery[ToDoCategoryTable]
+  val todoTable         = TableQuery[ToDoTable]
+  val todoCategoryTable = TableQuery[ToDoCategoryTable]
 
   /**
     * Get ToDo Data
@@ -34,19 +30,12 @@ class ToDoRepository()(implicit val ec: ExecutionContext) extends SlickRepositor
     slave.run(todoTable.filter(_.id === id).result.headOption)
   }
 
-  /**
-    * Get All ToDo Data with Category Information
-    */
-  def getAllWithCategories: Future[Seq[(ToDo, Option[ToDoCategory])]] = {
-    val query = todoTable
-      .joinLeft(categoryTable)
-      .on(_.categoryId === _.id)
-      .result
-      .map(_.map {
-        case (todo, categoryOpt) => (todo, categoryOpt)
-      })
+  def getTodosWithCategories(): Future[Seq[(ToDo, Option[ToDoCategory])]] = {
+    val queryWithLeftJoin = for {
+      (todo, categoryOpt) <- todoTable joinLeft todoCategoryTable on (_.categoryId === _.id)
+    } yield (todo, categoryOpt)
 
-    slave.run(query)
+    slave.run(queryWithLeftJoin.result)
   }
 
   /**

@@ -4,6 +4,7 @@ import ixias.model._
 import ixias.util._
 import ixias.util.EnumStatus
 import java.time.LocalDateTime
+import model.{ ToDo, ToDoCategory }
 
 // ToDoを表すモデル
 //~~~~~~~~~~~~~~~~~~~~
@@ -36,3 +37,10 @@ object ToDo {
     case object DONE        extends ToDoState(code = 2, name = "完了")
   }
 }
+
+// ToDoページのviewvalue
+case class ViewValueToDo(
+  title:  String,
+  cssSrc: Seq[String],
+  jsSrc:  Seq[String],
+) extends ViewValueCommon

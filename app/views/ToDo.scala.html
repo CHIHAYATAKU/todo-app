@@ -1,0 +1,11 @@
+@import model._
+@(vv: model.ViewValueToDo, todos: Seq[(ToDo, Option[ToDoCategory])])
+@common.Default(vv){
+   <ul>
+    @for((todo, categoryOpt) <- todos) {
+      <li style="background-color: @categoryOpt.fold("#FFFFFF")(_.color.name)">
+        <strong>@todo.title</strong> - @todo.body
+      </li>
+    }
+ </ul>
+}
