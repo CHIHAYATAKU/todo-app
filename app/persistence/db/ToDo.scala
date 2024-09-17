@@ -8,7 +8,7 @@ import persistence.db.ToDoCategoryTable
 
 import java.time
 
-// UserTable: Userテーブルへのマッピングを行う
+//　ToDoTable: ToDoテーブルへのマッピングを行う
 //~~~~~~~~~~~~~~
 case class ToDoTable(tag: Tag) extends Table[ToDo](tag, "to_do") {
   def id         = column[ToDo.Id]("id", UInt64, O.PrimaryKey, O.AutoInc)

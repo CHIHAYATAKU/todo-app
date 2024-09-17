@@ -7,7 +7,7 @@ import model.ToDoCategory
 
 import java.time
 
-// UserTable: Userテーブルへのマッピングを行う
+// ToDoCategoryTable: ToDoCategoryテーブルへのマッピングを行う
 //~~~~~~~~~~~~~~
 case class ToDoCategoryTable(tag: Tag) extends Table[ToDoCategory](tag, "to_do_category") {
   def id        = column[ToDoCategory.Id]("id", UInt64, O.PrimaryKey, O.AutoInc)

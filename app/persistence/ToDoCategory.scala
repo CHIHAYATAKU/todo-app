@@ -9,7 +9,7 @@ import model.ToDoCategory
 import persistence.db.ToDoCategoryTable
 import javax.inject._
 
-// ToDoRepository: ToDoTableへのクエリ発行を行うRepository層の定義
+// ToDoCategoryRepository: ToDoCategoryTableへのクエリ発行を行うRepository層の定義
 //~~~~~~~~~~~~~~~~~~~~~~
 @Singleton
 class ToDoCategoryRepository @Inject() (
