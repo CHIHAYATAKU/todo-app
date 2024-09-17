@@ -3,11 +3,8 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 import scala.concurrent._
-import scala.concurrent.duration._
+import persistence.ToDoRepository
 import model.{ ToDo, ToDoCategory, ViewValueToDo }
-import play.api.i18n.{ I18nSupport, Messages }
-import persistence.{ ToDoRepository, ToDoCategoryRepository }
-import play.twirl.api.Html
 
 @Singleton
 class ToDoController @Inject() (
@@ -23,9 +20,9 @@ class ToDoController @Inject() (
         ViewValueToDo(
           title  = "ToDo List",
           cssSrc = Seq("todo.css"),
-          jsSrc  = Seq("todo.js")
+          jsSrc  = Seq("todo.js"),
+          todos  = todosWithCategories
         ),
-        todosWithCategories
       ))
     }
   }

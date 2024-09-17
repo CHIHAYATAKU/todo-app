@@ -1,7 +1,7 @@
 @import model._
 @import java.time.format.DateTimeFormatter
 
-@(vv: model.ViewValueToDo, todos: Seq[(ToDo, Option[ToDoCategory])])
+@(vv: model.ViewValueToDo)
 @common.Default(vv){
 <ul>
   <li><a href="@routes.HomeController.index()">Home</a></li>
@@ -9,9 +9,9 @@
 </ul>
 <div class="table-div">
   <div class="legend">
-    <div><span style="background-color: #61DAFB;"></span> フロントエンド</div>
-    <div><span style="background-color: #4B8BBE;"></span> バックエンド</div>
-    <div><span style="background-color: #E6522C;"></span> インフラ</div>
+    <div><span style="background-color: @ToDoCategory.Color.FRONT.name"></span> フロントエンド</div>
+    <div><span style="background-color: @ToDoCategory.Color.BACK.name"></span> バックエンド</div>
+    <div><span style="background-color: @ToDoCategory.Color.INFRA.name"></span> インフラ</div>
   </div>
   <table border="1" cellspacing="0" cellpadding="5">
     <thead>
@@ -25,7 +25,7 @@
       </tr>
     </thead>
     <tbody>
-      @for((todo, categoryOpt) <- todos) { <tr style="background-color: @categoryOpt.fold(" #FFFFFF")(_.color.name)">
+      @for((todo, categoryOpt) <- vv.todos) { <tr style="background-color: @categoryOpt.fold(" #FFFFFF")(_.color.name)">
         <td>@todo.title</td>
         <td>@todo.body</td>
         <td>@todo.state.name</td>

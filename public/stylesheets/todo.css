@@ -28,10 +28,10 @@ body {
 }
 
 .main {
-  width: 100%;
+  position: relative;
+  width: 80%;
   margin: 100px auto;
   padding: 100px;
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -73,6 +73,7 @@ table {
 }
 
 .legend div {
+  position: relative;
   margin-bottom: 10px;
   padding: 5px;
   font-size: 10px;
@@ -88,12 +89,13 @@ table {
 
 .table-div {
   position: relative;
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: flex-start;
-  margin: 0%;
-  padding: 0%;
+  align-items: center;
+  margin: auto;
+  padding: 0;
 }
 
 /******* フォームのinfoを非表示に *******/

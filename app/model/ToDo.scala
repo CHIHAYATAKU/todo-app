@@ -2,7 +2,6 @@ package model
 
 import ixias.model._
 import ixias.util._
-import ixias.util.EnumStatus
 import java.time.LocalDateTime
 import model.{ ToDo, ToDoCategory }
 
@@ -43,4 +42,5 @@ case class ViewValueToDo(
   title:  String,
   cssSrc: Seq[String],
   jsSrc:  Seq[String],
+  todos:  Seq[(ToDo, Option[ToDoCategory])],
 ) extends ViewValueCommon

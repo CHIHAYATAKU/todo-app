@@ -3,16 +3,10 @@ package persistence
 import com.zaxxer.hikari.HikariDataSource
 
 import scala.concurrent.{ ExecutionContext, Future }
-import ixias.model._
 import ixias.slick.SlickRepository
-import ixias.slick.builder.{ DatabaseBuilder, HikariConfigBuilder }
 import ixias.slick.jdbc.MySQLProfile.api._
-import ixias.slick.model.DataSourceName
 import model.ToDoCategory
-import model.ToDoCategory.Id
 import persistence.db.ToDoCategoryTable
-import slick.dbio.Effect
-import slick.sql.FixedSqlAction
 import javax.inject._
 
 // ToDoRepository: ToDoTableへのクエリ発行を行うRepository層の定義
@@ -21,7 +15,7 @@ import javax.inject._
 class ToDoCategoryRepository @Inject() (
   @Named("master") master: Database,
   @Named("slave") slave:   Database
-)(implicit val ec:                   ExecutionContext) extends SlickRepository[ToDoCategory.Id, ToDoCategory] {
+)(implicit val ec:         ExecutionContext) extends SlickRepository[ToDoCategory.Id, ToDoCategory] {
 
   val todoCategoryTable = TableQuery[ToDoCategoryTable]
 
