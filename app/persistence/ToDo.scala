@@ -21,19 +21,23 @@ class ToDoRepository @Inject() (
   /**
     * Get ToDo Data
     */
-  def getById(id: ToDo.Id): Future[Option[ToDo]] = {
-    slave.run(todoTable.filter(_.id === id).result.headOption)
+  def getById(id: ToDo.Id): Future[Option[ToDo#EmbeddedId]] = {
+    slave.run(todoTable.filter(_.id === id).result.headOption).map(_.map(_.toEmbeddedId))
   }
 
   /**
     * Get ToDo Data　With Category
     */
-  def getTodosWithCategories(): Future[Seq[(ToDo, Option[ToDoCategory])]] = {
+  def getTodosWithCategories(): Future[Seq[(ToDo#EmbeddedId, Option[ToDoCategory#EmbeddedId])]] = {
     val queryWithLeftJoin = for {
       (todo, categoryOpt) <- todoTable joinLeft todoCategoryTable on (_.categoryId === _.id)
     } yield (todo, categoryOpt)
 
-    slave.run(queryWithLeftJoin.result)
+    slave.run(queryWithLeftJoin.result).map { results =>
+      results.map { case (todo, categoryOpt) =>
+        (todo.toEmbeddedId, categoryOpt.map(_.toEmbeddedId))
+      }
+    }
   }
 
   /**
@@ -58,12 +62,13 @@ class ToDoRepository @Inject() (
   /**
     * Delete ToDo Data
     */
-  def remove(id: ToDo.Id): Future[Option[ToDo#EmbeddedId]] = {
+  def remove(id: ToDo.Id): Future[Option[ToDo.Id]] = {
     master.run {
-      todoTable.filter(_.id === id).delete.map {
+      val query = todoTable.filter(_.id === id).delete.map {
         case 0 => None
-        case _ => Some(id.asInstanceOf[ToDo#EmbeddedId])
+        case _ => Some(id)
       }
+      query
     }
   }
 }
