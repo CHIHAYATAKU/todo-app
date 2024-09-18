@@ -3,7 +3,7 @@ package persistence.db
 import java.time.LocalDateTime
 import ixias.slick.jdbc.MySQLProfile.api._
 import ixias.slick.builder._
-import model.ToDo
+import model.{ ToDo, ToDoCategory }
 import persistence.db.ToDoCategoryTable
 
 import java.time
@@ -12,7 +12,7 @@ import java.time
 //~~~~~~~~~~~~~~
 case class ToDoTable(tag: Tag) extends Table[ToDo](tag, "to_do") {
   def id         = column[ToDo.Id]("id", UInt64, O.PrimaryKey, O.AutoInc)
-  def categoryId = column[Long]("category_id", UInt64)
+  def categoryId = column[ToDoCategory.Id]("category_id", UInt64)
   def title      = column[String]("title", Utf8Char255)
   def body       = column[String]("body", Text)
   def state      = column[ToDo.ToDoState]("state", UInt8)

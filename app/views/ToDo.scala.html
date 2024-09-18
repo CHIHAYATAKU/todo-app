@@ -7,6 +7,7 @@
   <li><a href="@routes.HomeController.index()">Home</a></li>
   <li><a>カテゴリー一覧</a></li>
 </ul>
+
 <div class="todo-div">
   <div class="legend">
     <div><span style="background-color: @ToDoCategory.Color.FRONT.name"></span> フロントエンド</div>
@@ -14,25 +15,24 @@
     <div><span style="background-color: @ToDoCategory.Color.INFRA.name"></span> インフラ</div>
   </div>
   <div class="todo-list">
-    @for((todo, categoryOpt) <- vv.todos) {
-      <div class="todo-item">
-        <div class="todo-content">
-          <div class="todo-title">@todo.title</div>
-          <div class="todo-body">@todo.body</div>
-          <div class="todo-dates">
-            @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd")) { dateFormatter =>
-            <div>作成日: @todo.createdAt.format(dateFormatter)</div>
-            <div>更新日: @todo.updatedAt.format(dateFormatter)</div>
-            }
-          </div>
-        </div>
-        <div class="todo-status-category">
-          <div class="todo-status">@todo.state.name</div>
-          <div class="todo-category">
-            <span class="category-color" style="background-color: @categoryOpt.fold("#FFFFFF")(_.color.name)"></span>
-          </div>
+    @for((todo, categoryOpt) <- vv.todos) { <div class="todo-item">
+      <div class="todo-content">
+        <div class="todo-title">@todo.v.title</div>
+        <div class="todo-body">@todo.v.body</div>
+        <div class="todo-dates">
+          @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd")) { dateFormatter =>
+          <div>作成日: @todo.v.createdAt.format(dateFormatter)</div>
+          <div>更新日: @todo.v.updatedAt.format(dateFormatter)</div>
+          }
         </div>
       </div>
-    }
+      <div class="todo-status-category">
+        <div class="todo-status">@todo.v.state.name</div>
+        <div class="todo-category">
+          <span class="category-color" style="background-color: @categoryOpt.fold(" #FFFFFF")(_.v.color.name)"></span>
+        </div>
+      </div>
   </div>
+  }
+</div>
 }
