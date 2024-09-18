@@ -9,7 +9,7 @@ import model.{ ToDo, ToDoCategory }
 //~~~~~~~~~~~~~~~~~~~~
 case class ToDo(
   id:         Option[ToDo.Id],
-  categoryId: Long,
+  categoryId: ToDoCategory.Id,
   title:      String,
   body:       String,
   state:      ToDo.ToDoState,
@@ -36,11 +36,3 @@ object ToDo {
     case object DONE        extends ToDoState(code = 2, name = "完了")
   }
 }
-
-// ToDoページのviewvalue
-case class ViewValueToDo(
-  title:  String,
-  cssSrc: Seq[String],
-  jsSrc:  Seq[String],
-  todos:  Seq[(ToDo, Option[ToDoCategory])],
-) extends ViewValueCommon
