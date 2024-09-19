@@ -1,7 +1,8 @@
-@import model._
+@import model.{ ToDo, ToDoCategory }
+@import model.viewValue.ViewValueToDo
 @import java.time.format.DateTimeFormatter
 
-@(vv: model.ViewValueToDo)
+@(vv: model.viewValue.ViewValueToDo)
 @common.Default(vv){
 <ul>
   <li><a href="@routes.HomeController.index()">Home</a></li>

@@ -4,7 +4,8 @@ import javax.inject._
 import play.api.mvc._
 import scala.concurrent._
 import persistence.ToDoRepository
-import model.{ ToDo, ToDoCategory, ViewValueToDo }
+import model.{ ToDo, ToDoCategory }
+import model.viewValue.ViewValueToDo
 
 @Singleton
 class ToDoController @Inject() (
@@ -22,7 +23,7 @@ class ToDoController @Inject() (
           cssSrc = Seq("todo.css"),
           jsSrc  = Seq("todo.js"),
           todos  = todosWithCategories
-        ),
+        )
       ))
     }
   }
