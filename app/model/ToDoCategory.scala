@@ -32,6 +32,5 @@ object ToDoCategory {
     case object FRONT extends Color(code = 1, name = "#F2A1A1")
     case object BACK  extends Color(code = 2, name = "#A1B3F2")
     case object INFRA extends Color(code = 3, name = "#F2E1A1")
-
   }
 }

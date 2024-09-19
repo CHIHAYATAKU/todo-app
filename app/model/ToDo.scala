@@ -3,7 +3,6 @@ package model
 import ixias.model._
 import ixias.util._
 import java.time.LocalDateTime
-import model.{ ToDo, ToDoCategory }
 
 // ToDoを表すモデル
 //~~~~~~~~~~~~~~~~~~~~

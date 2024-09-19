@@ -27,4 +27,13 @@ class ToDoController @Inject() (
       ))
     }
   }
+
+  // ToDoの削除メソッド
+  def deleteToDo(id: Long) = Action.async { implicit request: Request[AnyContent] =>
+    todoRepo.remove(ToDo.Id(id)).map {
+      case Some(_) => Redirect(routes.ToDoController.index())
+      case None    => Redirect(routes.ToDoController.index())
+    }
+  }
+
 }

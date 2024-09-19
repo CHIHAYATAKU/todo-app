@@ -141,14 +141,14 @@ body {
   justify-content: flex-end;
 }
 
-.legend div {
+.legend div div {
   position: relative;
   margin-bottom: 10px;
   padding: 5px;
   font-size: 12px;
 }
 
-.legend div span {
+.legend div div span {
   display: inline-block;
   width: 15px;
   height: 15px;

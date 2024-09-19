@@ -1,8 +1,8 @@
-@import model.{ ToDo, ToDoCategory }
 @import model.viewValue.ViewValueToDo
 @import java.time.format.DateTimeFormatter
+@import helper.CSRF
 
-@(vv: model.viewValue.ViewValueToDo)
+@(vv: model.viewValue.ViewValueToDo)(implicit request: RequestHeader)
 @common.Default(vv){
 <ul>
   <li><a href="@routes.HomeController.index()">Home</a></li>
@@ -11,9 +11,24 @@
 
 <div class="todo-div">
   <div class="legend">
-    <div><span style="background-color: @ToDoCategory.Color.FRONT.name"></span> フロントエンド</div>
-    <div><span style="background-color: @ToDoCategory.Color.BACK.name"></span> バックエンド</div>
-    <div><span style="background-color: @ToDoCategory.Color.INFRA.name"></span> インフラ</div>
+    @for((todo,categoryOpt) <- vv.todos) {
+      <div>
+        @{
+          val categoryHtml = categoryOpt match {
+            case Some(category) =>
+              s"""
+                <div>
+                  <span style="background-color: ${category.v.color.name}"></span>
+                  ${category.v.name}
+                </div>
+              """
+            case None =>
+              "<div>None category</div>"
+          }
+          Html(categoryHtml)
+        }
+      </div>
+    }
   </div>
   <div class="todo-list">
     @for((todo, categoryOpt) <- vv.todos) { <div class="todo-item">
@@ -34,6 +49,13 @@
         </div>
       </div>
   </div>
+  <div class="todo-actions">
+    <form action="@routes.ToDoController.deleteToDo(todo.v.id.getOrElse(0L))" method="post">
+      @CSRF.formField
+      <button type="submit">削除</button>
+    </form>
+  </div>
   }
 </div>
 }
+
