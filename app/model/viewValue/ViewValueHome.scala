@@ -1,10 +1,6 @@
-/**
- *
- * to do sample project
- *
- */
+package model.viewValue
 
-package model
+import model.viewValue.common.ViewValueCommon
 
 // Topページのviewvalue
 case class ViewValueHome(
@@ -12,4 +8,3 @@ case class ViewValueHome(
   cssSrc: Seq[String],
   jsSrc:  Seq[String],
 ) extends ViewValueCommon
-

@@ -1,18 +1,12 @@
-/**
- *
- * to do sample project
- *
- */
-
 package controllers
 
 import javax.inject._
 import play.api.mvc._
 
-import model.ViewValueHome
+import model.viewValue.ViewValueHome
 
 @Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class HomeController @Inject() (val controllerComponents: ControllerComponents) extends BaseController {
 
   def index() = Action { implicit req =>
     val vv = ViewValueHome(
