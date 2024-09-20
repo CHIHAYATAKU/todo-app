@@ -80,10 +80,48 @@ body {
   flex: 1;
 }
 
+/* チェックボックスを丸くするスタイル */
+.round-checkbox {
+  width: 20px;
+  height: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  margin-left: 0%;
+}
+
+/* チェックが入っているときのスタイル */
+.round-checkbox:checked {
+  background-color: #4CAF50;
+  border: 2px solid #4CAF50;
+}
+
+/* チェックのマーク */
+.round-checkbox:checked::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+}
+
 .todo-title {
   font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 5px;
+}
+
+.title-div {
+  position: relative;
+  display: flex;
 }
 
 .todo-body {
@@ -141,14 +179,14 @@ body {
   justify-content: flex-end;
 }
 
-.legend div div {
+.legend div {
   position: relative;
   margin-bottom: 10px;
   padding: 5px;
   font-size: 12px;
 }
 
-.legend div div span {
+.legend div span {
   display: inline-block;
   width: 15px;
   height: 15px;
