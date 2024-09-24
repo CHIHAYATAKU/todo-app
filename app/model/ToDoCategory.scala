@@ -26,11 +26,11 @@ object ToDoCategory {
 
   // ステータス定義
   //~~~~~~~~~~~~~~~~~
-  sealed abstract class Color(val code: Short, val name: String) extends EnumStatus
+  sealed abstract class Color(val code: Short, val categoryName: String) extends EnumStatus
 
   object Color extends EnumStatus.Of[Color] {
-    case object FRONT extends Color(code = 1, name = "#F2A1A1")
-    case object BACK  extends Color(code = 2, name = "#A1B3F2")
-    case object INFRA extends Color(code = 3, name = "#F2E1A1")
+    case object Red    extends Color(code = 1, categoryName = "フロントエンド")
+    case object Blue   extends Color(code = 2, categoryName = "バックエンド")
+    case object Yellow extends Color(code = 3, categoryName = "インフラ")
   }
 }

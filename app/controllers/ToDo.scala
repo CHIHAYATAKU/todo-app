@@ -31,8 +31,8 @@ class ToDoController @Inject() (
   // ToDoの削除メソッド
   def deleteToDo(id: Long) = Action.async { implicit request: Request[AnyContent] =>
     todoRepo.remove(ToDo.Id(id)).map {
-      case Some(_) => NoContent // 成功時にHTTP 204 (No Content) を返す
-      case None    => NotFound  // 見つからなければ404を返す
+      case Some(_) => NoContent
+      case None    => NotFound
     }
   }
 

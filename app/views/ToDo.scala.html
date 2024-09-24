@@ -12,9 +12,11 @@
 
 <div class="todo-div">
   <div class="legend">
-    <div><span style="background-color: @ToDoCategory.Color.FRONT.name"></span> フロントエンド</div>
-    <div><span style="background-color: @ToDoCategory.Color.BACK.name"></span> バックエンド</div>
-    <div><span style="background-color: @ToDoCategory.Color.INFRA.name"></span> インフラ</div>
+    @for(color <- ToDoCategory.Color.values) {
+      <div>
+        <span style="background-color: @color.toString"></span> @color.categoryName
+      </div>
+    }
   </div>
 <div class="todo-list">
   @for((todo, categoryOpt) <- vv.todos) { 
@@ -40,7 +42,7 @@
       <div class="todo-status-category">
         <div class="todo-status">@todo.v.state.name</div>
         <div class="todo-category">
-          <span class="category-color" style="background-color: @categoryOpt.fold(" #FFFFFF")(_.v.color.name)"></span>
+          <span class="category-color" style="background-color: @categoryOpt.fold(" #FFFFFF")(_.v.color.toString)"></span>
         </div>
       </div>
     </div>
