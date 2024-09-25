@@ -1,32 +1,22 @@
-function deleteTodoAjax(todoId) {
-    const form = document.getElementById(`delete-form-${todoId}`);
-    const todoItem = document.getElementById(`todo-${todoId}`);
-
-    console.log(todoItem);
-
-    if (form && todoItem) {
-        // CSRFトークンを取得
-        const csrfToken = form.querySelector('input[name=csrfToken]').value;
-
-        // 非同期リクエストを送信
-        fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Csrf-Token': csrfToken
-            },
-        }).then(response => {
-            if (response.ok) {
-                // 成功したらToDoアイテムをページから削除
-                todoItem.remove();
-                console.log('削除成功');
-            } else {
-                console.error('削除に失敗しました。ステータス:', response.status);
+document.querySelectorAll('.todo-ele').forEach(item => {
+    item.addEventListener('click', function () {
+        // 他の要素がアクティブの場合、非表示にする
+        document.querySelectorAll('.todo-ele.active').forEach(activeItem => {
+            if (activeItem !== item) {
+                activeItem.classList.remove('active');
             }
-        }).catch(error => {
-            console.error('エラーが発生しました:', error);
         });
-    } else {
-        console.error('フォームまたはToDoアイテムが見つかりません');
+
+        // クリックした要素のポップアップメニューをトグルする
+        item.classList.toggle('active');
+    });
+});
+
+// ポップアップ外をクリックしたら閉じる
+window.addEventListener('click', function (event) {
+    if (!event.target.closest('.todo-ele')) {
+        document.querySelectorAll('.todo-ele.active').forEach(activeItem => {
+            activeItem.classList.remove('active');
+        });
     }
-}
+});
