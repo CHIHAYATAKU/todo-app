@@ -4,7 +4,7 @@
 * two arguments, a `String` for the title of the page and an `Html`
 * object to insert into the body of the page.
 *@
-@(vv: model.viewValue.common.ViewValueCommon)(content: Html)
+@(vv: model.viewValue.common.ViewValueCommon)(content: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -16,6 +16,17 @@
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
   </head>
   <body>
+    @if(request.flash.get("success").isDefined) {
+      <div class="alert alert-success">
+        @request.flash.get("success")
+      </div>
+      }
+  
+      @if(request.flash.get("error").isDefined) {
+      <div class="alert alert-danger">
+        @request.flash.get("error")
+      </div>
+      }
     @* And here's where we render the `Html` object containing
     * the page content. *@
     <header class="header">
