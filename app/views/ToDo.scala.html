@@ -12,20 +12,18 @@
 
 <div class="todo-div">
   <div class="legend">
-    @for(color <- ToDoCategory.Color.values) {
-      <div>
-        <span style="background-color: @color.toString"></span> @color.categoryName
-      </div>
-    }
+    @for(category <- vv.categories) { <div>
+      <span style="background-color: @category.v.color.toString"></span>@category.v.name
   </div>
+  }
+</div>
+
 <div class="todo-list">
   @for((todo, categoryOpt) <- vv.todos) { 
-    <div class="todo-item" id="todo-@todo.v.id.getOrElse(0L)">
+    <div class="todo-ele">
+    <div class="todo-item" id="todo-@todo.v.id.get">
       <div class="todo-content">
-        <div class="title-div">
-          <input type="checkbox" class="round-checkbox" onchange="deleteTodoAjax(@todo.v.id.getOrElse(0L))" />
-          <div class="todo-title">@todo.v.title</div>
-        </div>
+        <div class="todo-title">@todo.v.title</div>
         <div class="todo-body">@todo.v.body</div>
         <div class="todo-dates">
           @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd")) { dateFormatter =>
@@ -34,18 +32,23 @@
           }
         </div>
       </div>
-      <!-- 削除フォーム（非表示にしておく） -->
-      <form id="delete-form-@todo.v.id.getOrElse(0L)" action="@routes.ToDoController.deleteToDo(todo.v.id.getOrElse(0L))"
-        method="post" style="display: none;">
-        @CSRF.formField
-      </form>
       <div class="todo-status-category">
         <div class="todo-status">@todo.v.state.name</div>
         <div class="todo-category">
-          <span class="category-color" style="background-color: @categoryOpt.fold(" #FFFFFF")(_.v.color.toString)"></span>
+          <span class="category-color" style="background-color: @categoryOpt.fold("White")(_.v.color.toString)"></span>
         </div>
       </div>
     </div>
-  }
+    
+    <div class="popup-menu">
+      <form action="@routes.ToDoController.deleteToDo(todo.v.id.get)" method="post"
+        onsubmit="return confirm('本当に削除しますか？');">
+        @CSRF.formField
+        <button type="submit" class="delete-button">削除</button>
+      </form>
+      <button>編集</button>
+    </div>
+</div>
+}
 </div>
 }
