@@ -20,8 +20,8 @@ class ToDoCreateController @Inject() (
       Ok(views.html.ToDoCreate(
         ViewValueToDoCreate(
           title      = "Create ToDo",
-          cssSrc     = Seq("todo.css"),
-          jsSrc      = Seq("todo.js"),
+          cssSrc     = Seq("todoCreate.css"),
+          jsSrc      = Seq("todoCreate.js"),
           toDoForm   = ToDoDataForm.form,
           categories = categories
         )
@@ -39,8 +39,8 @@ class ToDoCreateController @Inject() (
           Future.successful(BadRequest(views.html.ToDoCreate(
             ViewValueToDoCreate(
               title      = "Create ToDo",  // 必要に応じてタイトルを指定
-              cssSrc     = Seq("todo.css"),
-              jsSrc      = Seq("todo.js"),
+              cssSrc     = Seq("todoCreate.css"),
+              jsSrc      = Seq("todoCreate.js"),
               toDoForm   = formWithErrors, // エラーがあるフォームを渡す
               categories = categories
             )

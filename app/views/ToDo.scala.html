@@ -6,11 +6,6 @@
 
 @(vv: model.viewValue.ViewValueToDo)(implicit request: RequestHeader)
 @common.Default(vv){
-<ul>
-  <li><a href="@routes.HomeController.index()">Home</a></li>
-  <li><a>カテゴリー一覧</a></li>
-</ul>
-
 <div class="todo-div">
   <div class="legend">
     @for(category <- vv.categories) { <div>

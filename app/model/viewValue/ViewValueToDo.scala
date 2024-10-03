@@ -2,6 +2,7 @@ package model.viewValue
 
 import model.{ ToDo, ToDoCategory }
 import model.viewValue.common.ViewValueCommon
+
 // ToDoページのviewvalue
 case class ViewValueToDo(
   title:      String,

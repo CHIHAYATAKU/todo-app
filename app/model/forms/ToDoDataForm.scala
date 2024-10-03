@@ -9,7 +9,7 @@ case class ToDoData(title: String, body: String, categoryId: ToDoCategory.Id)
 object ToDoDataForm {
   // 正規表現を使って全角・半角の文字を許可する
   val titleRegex = "^[\\p{L}\\p{N}ー\\s\\p{P}]{1,255}$".r
-  val bodyRegex  = "^[\\p{L}\\p{N}ー\\s\\p{P}]{1,1000}$".r
+  val bodyRegex  = "^[\\p{L}\\p{N}ー\\s\\p{P}]{0,1000}$".r
 
   val form: Form[ToDoData] = Form(
     mapping(
