@@ -1,0 +1,22 @@
+@import helper._
+@(toDoForm: Form[models.forms.ToDoData], categories: Seq[model.ToDoCategory#EmbeddedId])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+
+@helper.form(action = routes.ToDoController.createToDo()) {
+  <div>
+    @helper.inputText(toDoForm("title"), 'placeholder -> "タイトル")
+  </div>
+  <div>
+    @helper.textarea(toDoForm("body"), 'placeholder -> "本文")
+  </div>
+  <div>
+    @helper.select(
+      toDoForm("categoryId"),
+      options = categories.map(category => category.id.toString -> category.v.name),
+      '_default -> "選択してください",
+      'id -> "categoryId",
+      'required -> "required"
+    )
+  </div>
+  @CSRF.formField
+  <button type="submit">追加</button>
+}
