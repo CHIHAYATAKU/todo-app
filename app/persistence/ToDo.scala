@@ -64,11 +64,10 @@ class ToDoRepository @Inject() (
     */
   def remove(id: ToDo.Id): Future[Option[ToDo.Id]] = {
     master.run {
-      val query = todoTable.filter(_.id === id).delete.map {
+      todoTable.filter(_.id === id).delete.map {
         case 0 => None
         case _ => Some(id)
       }
-      query
     }
   }
 }

@@ -20,40 +20,11 @@ class ToDoCategoryRepository @Inject() (
   val todoCategoryTable = TableQuery[ToDoCategoryTable]
 
   /**
-    * Get ToDoCategory Data
+    * Get all ToDoCategory Data
     */
-  def getById(id: ToDoCategory.Id): Future[Option[ToDoCategory]] = {
-    slave.run(todoCategoryTable.filter(_.id === id).result.headOption)
-  }
-
-  /**
-    * Add ToDoCategory Data
-    */
-  def add(category: ToDoCategory#WithNoId): Future[ToDoCategory.Id] = {
-    master.run(todoCategoryTable returning todoCategoryTable.map(_.id) += category.v)
-  }
-
-  /**
-    * Update ToDoCategory Data
-    */
-  def update(entity: ToDoCategory#EmbeddedId): Future[Option[ToDoCategory#EmbeddedId]] = {
-    master.run {
-      todoCategoryTable.filter(_.id === entity.id).update(entity.v).map(_ > 0).map {
-        case true  => Some(entity)
-        case false => None
-      }
-    }
-  }
-
-  /**
-    * Delete ToDoCategory Data
-    */
-  def remove(id: ToDoCategory.Id): Future[Option[ToDoCategory#EmbeddedId]] = {
-    master.run {
-      todoCategoryTable.filter(_.id === id).delete.map {
-        case 0 => None
-        case _ => Some(id.asInstanceOf[ToDoCategory#EmbeddedId])
-      }
+  def getAll(): Future[Seq[ToDoCategory#EmbeddedId]] = {
+    slave.run(todoCategoryTable.result).map { results =>
+      results.map(_.toEmbeddedId)
     }
   }
 }

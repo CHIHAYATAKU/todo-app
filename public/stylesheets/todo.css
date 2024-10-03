@@ -8,6 +8,10 @@ body {
   padding: 0;
 }
 
+.alert {
+  color: red;
+  font-weight: bold;
+}
 .header {
   height: 70px;
   background-color: #24292F;
@@ -65,12 +69,13 @@ body {
 .todo-item {
   border-radius: 10px;
   height: 100%;
-  width: 100%;
+  width: 90%;
   padding: 10px;
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
 }
 
 .todo-content {
@@ -84,6 +89,33 @@ body {
   font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 5px;
+}
+
+.todo-ele {
+  position: relative;
+  width: 100%;
+  display: flex;
+  transition: transform 0.2s;
+}
+
+.todo-ele:hover {
+  transform: scale(1.03);
+}
+
+.popup-menu {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 10;
+}
+
+.todo-ele.active .popup-menu {
+  display: block;
 }
 
 .todo-body {
@@ -101,7 +133,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* 中央寄せにするために変更 */
+  justify-content: center;
   margin-right: 10px;
 }
 
@@ -117,7 +149,7 @@ body {
 
 .todo-category {
   position: relative;
-  bottom: 0; /* 右下に配置 */
+  bottom: 0;
   right: 0;
   width: 110px;
   height: 100%;
@@ -134,7 +166,7 @@ body {
 
 
 .legend {
-  width: 90%;
+  width: 80%;
   float: left;
   position: relative;
   display: flex;
