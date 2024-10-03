@@ -3,7 +3,6 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 import scala.concurrent._
-import models.forms.ToDoDataForm
 import persistence.{ ToDoRepository, ToDoCategoryRepository }
 import model.{ ToDo, ToDoCategory }
 import model.viewValue.ViewValueToDo
@@ -31,36 +30,6 @@ class ToDoController @Inject() (
       ))
     }
   }
-
-  def showCreateToDoForm() = Action.async { implicit request: Request[AnyContent] =>
-    categoryRepo.getAll().map { categories =>
-      Ok(views.html.ToDoCreateForm(ToDoDataForm.form, categories)(request, messagesApi.preferred(request)))
-    }
-  }
-
-def createToDo() = Action.async { implicit request: Request[AnyContent] =>
-  // カテゴリを取得
-  categoryRepo.getAll().flatMap { categories =>
-    ToDoDataForm.form.bindFromRequest().fold(
-      formWithErrors => {
-        // BadRequest時にカテゴリをビューに渡す
-        Future.successful(BadRequest(views.html.ToDoCreateForm(formWithErrors, categories)(request, messagesApi.preferred(request))))
-      },
-      toDoData => {
-        val newTodo = ToDo(
-          id         = None,
-          categoryId = ToDoCategory.Id(toDoData.categoryId),
-          title      = toDoData.title,
-          body       = toDoData.body,
-          state      = ToDo.ToDoState.TODO
-        ).toWithNoId
-        todoRepo.add(newTodo).map { _ =>
-          Redirect(routes.ToDoController.index()).flashing("success" -> "ToDoが追加されました！")
-        }
-      }
-    )
-  }
-}
 
   // ToDoの削除メソッド
   def deleteToDo(id: Long) = Action.async { implicit request: Request[AnyContent] =>

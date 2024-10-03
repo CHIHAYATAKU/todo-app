@@ -6,8 +6,8 @@
 # An example controller showing a sample home page
 GET     /                             controllers.HomeController.index()
 GET     /todos                        controllers.ToDoController.index()
-GET     /todos/new                    controllers.ToDoController.showCreateToDoForm()
-POST    /todos/create                 controllers.ToDoController.createToDo()
+GET     /todos/new                    controllers.ToDoCreateController.index()
+POST    /todos/create                 controllers.ToDoCreateController.createToDo()
 POST    /todos/delete/:id             controllers.ToDoController.deleteToDo(id: Long)
 
 
