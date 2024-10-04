@@ -19,7 +19,7 @@
     <div class="todo-item" id="todo-@todo.id">
       <div class="todo-content">
         <div class="todo-title">@todo.v.title</div>
-        <div class="todo-body">@Html(todo.v.body.replace("\n", "<br>").stripMargin)</div>
+        <div class="todo-body"><pre>@todo.v.body</pre></div>
         <div class="todo-dates">
           @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd")) { dateFormatter =>
           <div>作成日: @todo.v.createdAt.format(dateFormatter)</div>

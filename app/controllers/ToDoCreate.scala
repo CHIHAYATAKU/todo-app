@@ -31,34 +31,33 @@ class ToDoCreateController @Inject() (
 
   // ToDoの追加メソッド
   def createToDo() = Action.async { implicit request: Request[AnyContent] =>
-    // カテゴリを取得
-    categoryRepo.getAll().flatMap { categories =>
-      ToDoDataForm.form.bindFromRequest().fold(
-        formWithErrors => {
-          // BadRequest時にカテゴリをビューに渡す
+    ToDoDataForm.form.bindFromRequest().fold(
+      formWithErrors => {
+        // BadRequest時にカテゴリをビューに渡す
+        categoryRepo.getAll().flatMap { categories =>
           Future.successful(BadRequest(views.html.ToDoCreate(
             ViewValueToDoCreate(
-              title      = "Create ToDo",  // 必要に応じてタイトルを指定
+              title      = "Create ToDo",
               cssSrc     = Seq("todoCreate.css"),
               jsSrc      = Seq("todoCreate.js"),
               toDoForm   = formWithErrors, // エラーがあるフォームを渡す
               categories = categories
             )
           )(request, messagesApi.preferred(request))))
-        },
-        toDoData => {
-          val newTodo = ToDo(
-            id         = None,
-            categoryId = ToDoCategory.Id(toDoData.categoryId),
-            title      = toDoData.title,
-            body       = toDoData.body,
-            state      = ToDo.ToDoState.TODO
-          ).toWithNoId
-          todoRepo.add(newTodo).map { _ =>
-            Redirect(routes.ToDoController.index()).flashing("success" -> "ToDoが追加されました！")
-          }
         }
-      )
-    }
+      },
+      toDoData => {
+        val newTodo = ToDo(
+          id         = None,
+          categoryId = ToDoCategory.Id(toDoData.categoryId),
+          title      = toDoData.title,
+          body       = toDoData.body,
+          state      = ToDo.ToDoState.TODO
+        ).toWithNoId
+        todoRepo.add(newTodo).map { _ =>
+          Redirect(routes.ToDoController.index()).flashing("success" -> "ToDoが追加されました！")
+        }
+      }
+    )
   }
 }
