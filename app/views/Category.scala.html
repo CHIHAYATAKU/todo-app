@@ -1,0 +1,9 @@
+@import model.viewValue.ViewValueCategory
+@import model.ToDoCategory
+@import java.time.format.DateTimeFormatter
+@import helper.CSRF
+@import play.twirl.api.Html
+
+@(vv: model.viewValue.ViewValueCategory)(implicit request: RequestHeader)
+@common.Default(vv){
+}
