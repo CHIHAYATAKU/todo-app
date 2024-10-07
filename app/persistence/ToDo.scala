@@ -1,5 +1,6 @@
 package persistence
 
+import java.time.LocalDateTime
 import scala.concurrent.{ ExecutionContext, Future }
 import ixias.slick.SlickRepository
 import ixias.slick.jdbc.MySQLProfile.api._
@@ -51,8 +52,14 @@ class ToDoRepository @Inject() (
     * Update ToDo Data
     */
   def update(entity: ToDo#EmbeddedId): Future[Option[ToDo#EmbeddedId]] = {
+    val updatedEntity = entity.v.copy(updatedAt = LocalDateTime.now())
+
     master.run {
-      todoTable.filter(_.id === entity.id).update(entity.v).map(_ > 0).map {
+      todoTable.filter(_.id === entity.id).map { todo =>
+        (todo.title, todo.body, todo.categoryId, todo.state, todo.updatedAt)
+      }.update {
+        (updatedEntity.title, updatedEntity.body, updatedEntity.categoryId, updatedEntity.state, updatedEntity.updatedAt)
+      }.map(_ > 0).map {
         case true  => Some(entity)
         case false => None
       }
