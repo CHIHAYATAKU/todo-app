@@ -1,7 +1,5 @@
 package controllers
 
-import play.api.data._
-import play.api.data.Forms._
 import javax.inject._
 import play.api.mvc._
 import scala.concurrent._

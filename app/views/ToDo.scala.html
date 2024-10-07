@@ -2,14 +2,10 @@
 @import model.ToDoCategory
 @import java.time.format.DateTimeFormatter
 @import helper.CSRF
+@import play.twirl.api.Html
 
 @(vv: model.viewValue.ViewValueToDo)(implicit request: RequestHeader)
 @common.Default(vv){
-<ul>
-  <li><a href="@routes.HomeController.index()">Home</a></li>
-  <li><a>カテゴリー一覧</a></li>
-</ul>
-
 <div class="todo-div">
   <div class="legend">
     @for(category <- vv.categories) { <div>
@@ -19,12 +15,11 @@
 </div>
 
 <div class="todo-list">
-  @for((todo, categoryOpt) <- vv.todos) { 
-    <div class="todo-ele">
+  @for((todo, categoryOpt) <- vv.todos) { <div class="todo-ele">
     <div class="todo-item" id="todo-@todo.id">
       <div class="todo-content">
         <div class="todo-title">@todo.v.title</div>
-        <div class="todo-body">@todo.v.body</div>
+        <div class="todo-body"><pre>@todo.v.body</pre></div>
         <div class="todo-dates">
           @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd")) { dateFormatter =>
           <div>作成日: @todo.v.createdAt.format(dateFormatter)</div>
@@ -35,14 +30,13 @@
       <div class="todo-status-category">
         <div class="todo-status">@todo.v.state.name</div>
         <div class="todo-category">
-          <span class="category-color" style="background-color: @categoryOpt.fold("White")(_.v.color.toString)"></span>
+          <span class="category-color" style="background-color: @categoryOpt.fold(" White")(_.v.color.toString)"></span>
         </div>
       </div>
     </div>
 
     <div class="popup-menu">
-      <form action="@routes.ToDoController.deleteToDo(todo.id)" method="post"
-        onsubmit="return confirm('本当に削除しますか？');">
+      <form action="@routes.ToDoController.deleteToDo(todo.id)" method="post" onsubmit="return confirm('本当に削除しますか？');">
         @CSRF.formField
         <button type="submit" class="delete-button">削除</button>
       </form>
@@ -51,4 +45,7 @@
 </div>
 }
 </div>
+
+<!-- 追加フォームへのボタン -->
+<a href="@routes.ToDoCreateController.index()" class="add-todo-button" id="addTodoButton">＋</a>
 }

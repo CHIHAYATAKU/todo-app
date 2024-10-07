@@ -1,13 +1,15 @@
 package model.viewValue
 
+import play.api.data.Form
 import model.{ ToDo, ToDoCategory }
+import model.forms.ToDoData
 import model.viewValue.common.ViewValueCommon
 
-// ToDoページのviewvalue
-case class ViewValueToDo(
+// ToDoCreateページのviewvalue
+case class ViewValueToDoCreate(
   title:      String,
   cssSrc:     Seq[String],
   jsSrc:      Seq[String],
-  todos:      Seq[(ToDo#EmbeddedId, Option[ToDoCategory#EmbeddedId])],
+  toDoForm:   Form[ToDoData],
   categories: Seq[ToDoCategory#EmbeddedId]
 ) extends ViewValueCommon

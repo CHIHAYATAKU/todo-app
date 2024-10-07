@@ -7,7 +7,7 @@
 @(vv: model.viewValue.common.ViewValueCommon)(content: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" font-size=16px>
   <head>
     <title>Todoアプリ</title>
     @for(css <- vv.cssSrc) {
@@ -30,7 +30,14 @@
     @* And here's where we render the `Html` object containing
     * the page content. *@
     <header class="header">
-      <div class="header__content"><span class="header__logo">To-do Sample</span></div>
+      <div class="header__content">
+        <span class="header__logo">To-do App</span>
+        <ul>
+          <li id="home"><a href="@routes.HomeController.index()">Home</a></li>
+          <li id="todo"><a href="@routes.ToDoController.index()">Todo一覧</a></li>
+          <li id="category"><a>カテゴリー一覧</a></li>
+        </ul>
+      </div>
     </header>
     <main class="main">
       <h1>@vv.title</h1>

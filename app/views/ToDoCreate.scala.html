@@ -1,0 +1,29 @@
+@import helper._
+
+@(vv: model.viewValue.ViewValueToDoCreate)(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+@common.Default(vv) {
+  @helper.form(action = routes.ToDoCreateController.createToDo()) {
+    <div class="form-div">
+      <div>
+        @helper.inputText(vv.toDoForm("title"), Symbol("placeholder") -> "タイトル")
+      </div>
+      <div>
+        @helper.textarea(vv.toDoForm("body"), Symbol("placeholder") -> "本文")
+      </div>
+      <div>
+        @helper.select(
+          vv.toDoForm("categoryId"),
+          options = vv.categories.map(category => category.id.toString -> category.v.name),
+          Symbol("_default") -> "選択してください",
+          Symbol("id") -> "categoryId",
+          Symbol("required") -> "required"
+        )
+      </div>
+      @CSRF.formField
+      <div class="button-div">
+        <button type="submit" class="button">追加</button>
+        <a href="@routes.ToDoController.index()" class="button">キャンセル</a>
+      </div>
+    </div>
+  }
+}
