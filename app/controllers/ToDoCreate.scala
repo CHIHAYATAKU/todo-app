@@ -34,8 +34,8 @@ class ToDoCreateController @Inject() (
     ToDoDataForm.form.bindFromRequest().fold(
       formWithErrors => {
         // BadRequest時にカテゴリをビューに渡す
-        categoryRepo.getAll().flatMap { categories =>
-          Future.successful(BadRequest(views.html.ToDoCreate(
+        categoryRepo.getAll().map { categories =>
+          BadRequest(views.html.ToDoCreate(
             ViewValueToDoCreate(
               title      = "Create ToDo",
               cssSrc     = Seq("todoCreate.css"),
@@ -43,7 +43,7 @@ class ToDoCreateController @Inject() (
               toDoForm   = formWithErrors, // エラーがあるフォームを渡す
               categories = categories
             )
-          )(request, messagesApi.preferred(request))))
+          )(request, messagesApi.preferred(request)))
         }
       },
       toDoData => {
