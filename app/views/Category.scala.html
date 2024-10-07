@@ -1,9 +1,36 @@
 @import model.viewValue.ViewValueCategory
 @import model.ToDoCategory
-@import java.time.format.DateTimeFormatter
 @import helper.CSRF
 @import play.twirl.api.Html
 
 @(vv: model.viewValue.ViewValueCategory)(implicit request: RequestHeader)
 @common.Default(vv){
+<div class="table-div">
+    <table class="category-table">
+        <thead>
+            <tr>
+                <th>カテゴリ名</th>
+                <th>slug</th>
+                <th>色</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(category <- vv.categories) { <tr class="category-item" id="category-@category.id">
+                <td>@category.v.name</td>
+                <td>@category.v.slug</td>
+                <td><span style="background-color: @category.v.color.toString"></span></td>
+                <td class="center-align">
+                    <a class="button button-edit">編集</a>
+                    <button type="submit" class="button button-delete"
+                        onclick="return confirm('本当に削除しますか？');">削除</button>
+                </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+</div>
+
+<!-- 追加フォームへのボタン -->
+<a class="add-category-button" id="addCategoryButton">＋</a>
 }
