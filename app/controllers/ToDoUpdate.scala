@@ -56,19 +56,24 @@ class ToDoUpdateController @Inject() (
         }
       },
       toDoData => {
-        val updatedTodo = ToDo(
-          id         = Some(ToDo.Id(id)),
-          categoryId = ToDoCategory.Id(toDoData.categoryId),
-          title      = toDoData.title,
-          body       = toDoData.body,
-          state      = toDoData.state.get
-        ).toEmbeddedId
+        toDoData.state match {
+          case Some(state) =>
+            val updatedTodo = ToDo(
+              id         = Some(ToDo.Id(id)),
+              categoryId = ToDoCategory.Id(toDoData.categoryId),
+              title      = toDoData.title,
+              body       = toDoData.body,
+              state      = toDoData.state.get
+            ).toEmbeddedId
 
-        todoRepo.update(updatedTodo).map {
-          case Some(_) =>
-            Redirect(routes.ToDoController.index()).flashing("success" -> "ToDoが更新されました！")
-          case None    =>
-            Redirect(routes.ToDoController.index()).flashing("error" -> "更新に失敗しました")
+            todoRepo.update(updatedTodo).map {
+              case Some(_) =>
+                Redirect(routes.ToDoController.index()).flashing("success" -> "ToDoが更新されました！")
+              case None    =>
+                Redirect(routes.ToDoController.index()).flashing("error" -> "更新に失敗しました")
+            }
+          case None        =>
+            Future.successful(BadRequest("State is required"))
         }
       }
     )
