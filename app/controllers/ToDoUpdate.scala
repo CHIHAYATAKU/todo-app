@@ -63,7 +63,7 @@ class ToDoUpdateController @Inject() (
               categoryId = ToDoCategory.Id(toDoData.categoryId),
               title      = toDoData.title,
               body       = toDoData.body,
-              state      = toDoData.state.get
+              state      = state
             ).toEmbeddedId
 
             todoRepo.update(updatedTodo).map {
