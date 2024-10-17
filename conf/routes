@@ -7,7 +7,9 @@
 GET     /                             controllers.HomeController.index()
 GET     /todos                        controllers.ToDoController.index()
 GET     /todos/new                    controllers.ToDoCreateController.index()
+GET     /todos/update/:id             controllers.ToDoUpdateController.index(id: Long)
 POST    /todos/create                 controllers.ToDoCreateController.createToDo()
+POST    /todos/update/:id             controllers.ToDoUpdateController.updateToDo(id: Long)
 POST    /todos/delete/:id             controllers.ToDoController.deleteToDo(id: Long)
 
 

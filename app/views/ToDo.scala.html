@@ -1,5 +1,6 @@
 @import model.viewValue.ViewValueToDo
 @import model.ToDoCategory
+@import model.ToDo.ToDoState
 @import java.time.format.DateTimeFormatter
 @import helper.CSRF
 @import play.twirl.api.Html
@@ -21,9 +22,9 @@
         <div class="todo-title">@todo.v.title</div>
         <div class="todo-body"><pre>@todo.v.body</pre></div>
         <div class="todo-dates">
-          @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd")) { dateFormatter =>
-          <div>作成日: @todo.v.createdAt.format(dateFormatter)</div>
-          <div>更新日: @todo.v.updatedAt.format(dateFormatter)</div>
+          @defining(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) { dateFormatter =>
+            <div>作成日: @todo.v.createdAt.format(dateFormatter)</div>
+            <div>更新日: @todo.v.updatedAt.format(dateFormatter)</div>
           }
         </div>
       </div>
@@ -38,9 +39,9 @@
     <div class="popup-menu">
       <form action="@routes.ToDoController.deleteToDo(todo.id)" method="post" onsubmit="return confirm('本当に削除しますか？');">
         @CSRF.formField
-        <button type="submit" class="delete-button">削除</button>
+        <button type="submit" class="button">削除</button>
       </form>
-      <button>編集</button>
+      <a href="@routes.ToDoUpdateController.index(todo.id)" class="button">編集</a>
     </div>
 </div>
 }
