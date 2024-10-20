@@ -236,11 +236,12 @@ pre {
 
 
 .legend {
-  width: 80%;
+  width: 90%;
   float: left;
   position: relative;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .legend div {
@@ -262,7 +263,7 @@ pre {
 
 .button {
   display: inline-block;
-  margin: 0.25rem 0; /* 上下に0.5remのスペースを追加 */
+  margin: 0.25rem 0;
   padding: 0.3125rem 0.625rem;
   background-color: #f0f0f0;
   color: black;

@@ -1,0 +1,229 @@
+/**
+ * category list
+ */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    height: fit-content;
+    background-color: #24292F;
+    width: 100%;
+}
+
+.header ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-right: 1.875rem;
+}
+
+.header ul #category {
+    border-bottom: solid;
+    border-color: aliceblue;
+    border-width: 0.25rem;
+}
+
+.header li {
+    margin-right: 1.25rem;
+}
+
+.header li:last-child {
+    margin-right: 0;
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
+    padding: 0.625rem 0;
+}
+
+.header a:hover {
+    color: green;
+}
+
+.header .header__content {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .header__logo {
+    color: white;
+    line-height: 4.375rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-left: 1.875rem;
+}
+
+.main {
+    width: 80%;
+    margin: 6.25rem auto;
+    padding: 6.25rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+.main h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.success-message {
+    margin: 1.875rem 0;
+    text-align: center;
+}
+
+.table-div {
+    position: relative;
+    width: 100%;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-table {
+    width: 80%;
+    border-collapse: collapse;
+    box-shadow: 0 0 0.15rem rgba(0, 0, 0, 0.3);
+    table-layout: fixed;
+    /* 固定レイアウトを適用 */
+}
+
+.category-table th,
+.category-table td {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.category-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.category-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.category-table tr td span {
+    display: inline-block;
+    width: 0.9375rem;
+    height: 0.9375rem;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 0.03125rem solid #ccc;
+}
+
+.center-align {
+    text-align: center;
+}
+
+.button {
+    display: inline-block;
+    margin: 0.25rem 0;
+    padding: 0.3125rem 0.625rem;
+    font-size: 0.75rem;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button-edit {
+    background-color: #007bff;
+}
+
+.button-edit:hover {
+    background-color: #0056b3;
+}
+
+.button-delete {
+    background-color: #dc3545;
+}
+
+.button-delete:hover {
+    background-color: #c82333;
+}
+
+.add-category-button {
+    position: fixed;
+    bottom: 3.75rem;
+    right: 3.75rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    color: white;
+    font-size: 1.5rem;
+    text-decoration: none;
+    background-color: #c0392b;
+    box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s;
+}
+
+.add-category-button:hover {
+    transform: scale(1.1);
+}
+
+/******* フォームのinfoを非表示に *******/
+.info {
+    display: none;
+}
+
+/******* カラムの比率を設定 *******/
+.category-table th:nth-child(1),
+.category-table td:nth-child(1) {
+    width: 30%;
+    /* カテゴリ名 */
+}
+
+.category-table th:nth-child(2),
+.category-table td:nth-child(2) {
+    width: 30%;
+    /* slug */
+}
+
+.category-table th:nth-child(3),
+.category-table td:nth-child(3) {
+    width: 10%;
+    /* 色 */
+}
+
+.category-table th:nth-child(4),
+.category-table td:nth-child(4) {
+    width: 30%;
+    /* 操作 */
+    white-space: normal;
+}
+
+@media screen and (min-width: 768px) and (max-width: 960px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    html {
+        font-size: 12px;
+    }
+}
